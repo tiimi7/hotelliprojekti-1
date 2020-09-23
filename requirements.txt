@@ -1,0 +1,4 @@
+# Käytän tehtävässä versioita, joita kurssikirjan luvun 1 esimerkissä 1 käytetään
+
+Flask==1.0.3
+httpie==1.0.2
