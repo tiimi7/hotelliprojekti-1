@@ -1,4 +1,4 @@
-# Käytän tehtävässä versioita, joita kurssikirjan luvun 1 esimerkissä 1 käytetään
-
+# This requirements.txt is used in both practical excercises (1 and 2), thats why it has all 3 dependencies
+Flask-RESTful==0.3.7
 Flask==1.0.3
 httpie==1.0.2

@@ -1,5 +1,7 @@
+# This is /models/instruction.py designed to meet the needs for practical ex. 2
 instruction_list = []
 
+# This function retrieves the last instruction by ID
 def get_last_id():
 
     if instruction_list:
@@ -11,10 +13,11 @@ def get_last_id():
         return 1
 
     return last_instruction.id + 1
-
+# This is obviously the Instruction class...
+# It has the def init -style constructor right at the beginning.
 class Instruction:
 
-    def __init__(self, name, description, num_of_tools, work_time, directions):
+    def __init__(self, name, description, tools, duration, steps, cost):
 
         self.id = get_last_id()
 
@@ -22,28 +25,34 @@ class Instruction:
 
         self.description = description
 
-        self.num_of_tools = num_of_servings
+        self.tools = tools
 
-        self.work_time = cook_time
+        self.duration = duration
 
-        self.directions = directions
+        self.steps = steps
 
-        self.is_publish = True
+        self.cost = cost
 
-        @property
-        def data(self):
-            return {
+        self.is_publish = False
 
-                'id': self.id,
+# And next we have that Instruction class property that returns data.
 
-                'name': self.name,
+    @property
+    def data(self):
+        return {
 
-                'description': self.description,
+            'id': self.id,
 
-                'num_of_tools': self.num_of_tools,
+            'name': self.name,
 
-                'work_time': self.work_time,
+            'description': self.description,
 
-                'directions': self.directions
+            'tools': self.tools,
+
+            'duration': self.duration,
+
+            'steps': self.steps,
+
+            'cost': self.cost
 
             }

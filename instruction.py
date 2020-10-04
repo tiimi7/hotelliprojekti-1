@@ -1,3 +1,5 @@
+# This is the instruction.py for practical ex. 1
+
 from flask import Flask, jsonify, request
 from http import HTTPStatus
 
