@@ -1,3 +1,4 @@
+from extensions import db
 # This is /models/instruction.py designed to meet the needs for practical ex. 2
 instruction_list = []
 
@@ -13,46 +14,23 @@ def get_last_id():
         return 1
 
     return last_instruction.id + 1
-# This is obviously the Instruction class...
-# It has the def init -style constructor right at the beginning.
-class Instruction:
 
-    def __init__(self, name, description, tools, duration, steps, cost):
 
-        self.id = get_last_id()
+# This is the database model for SQLAlchemy, it has variables for all the columns we need
 
-        self.name = name
 
-        self.description = description
+class Instruction(db.Model):
 
-        self.tools = tools
+    __tablename__ = 'instruction'
 
-        self.duration = duration
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200))
+    tools = db.Column(db.Integer)
+    duration = db.Column(db.Integer)
+    steps = db.Column(db.String(1000))
+    is_publish = db.Column(db.Boolean(), default=False)
+    created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
-        self.steps = steps
-
-        self.cost = cost
-
-        self.is_publish = False
-
-# And next we have that Instruction class property that returns data.
-
-    @property
-    def data(self):
-        return {
-
-            'id': self.id,
-
-            'name': self.name,
-
-            'description': self.description,
-
-            'tools': self.tools,
-
-            'duration': self.duration,
-
-            'steps': self.steps,
-
-            'cost': self.cost
-
-            }
+    user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
