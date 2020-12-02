@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
-#gjthlehtr testi yǵjreh
+#gjthlehtr testi yǵjreh juuson testi
 
 from config import Config
 from extensions import db
