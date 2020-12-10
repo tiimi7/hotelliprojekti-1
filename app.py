@@ -5,7 +5,7 @@ from flask_restful import Api
 from config import Config
 from extensions import db, jwt
 from resources.user import UserListResource, UserResource
-from resources.instruction import InstructionListResource, InstructionResource, InstructionPublishResource
+from resources.room import RoomListResource, RoomResource, RoomIsFreehResource
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
 # This is the app itself. This is not the most optimal way to implement create_app() but it will do
 # use app.app_context().push() in Python Shell for workaround
@@ -35,9 +35,9 @@ def register_extensions(app):
 def register_resources(app):
     api = Api(app)
     api.add_resource(UserListResource, '/users')
-    api.add_resource(InstructionListResource, '/instructions')
-    api.add_resource(InstructionResource, '/instructions/<int:instruction_id>')
-    api.add_resource(InstructionPublishResource, '/instructions/<int:instruction_id>/publish')
+    api.add_resource(RoomListResource, '/rooms')
+    api.add_resource(RoomResource, '/rooms/<int:instruction_id>')
+    api.add_resource(RoomIsFreehResource, '/rooms/<int:instruction_id>/isfree')
     api.add_resource(UserResource, '/users/<string:username>')
     api.add_resource(TokenResource, '/token')
     api.add_resource(RefreshResource, '/refresh')
