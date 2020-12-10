@@ -11,7 +11,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
-    instructions = db.relationship('Instruction', backref='user')
+    instructions = db.relationship('Instruction', backref='user') #tämä rivi täytyy muuttaa!
 
     @classmethod
     def get_by_username(cls, username):
@@ -20,6 +20,10 @@ class User(db.Model):
     @classmethod
     def get_by_email(cls, email):
         return cls.query.filter_by(email=email).first()
+
+    @classmethod
+    def get_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
 
     def save(self):
         db.session.add(self)
