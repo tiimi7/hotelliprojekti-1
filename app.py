@@ -4,11 +4,13 @@ from flask_restful import Api
 
 from config import Config
 from extensions import db, jwt
-from resources.user import UserListResource, UserResource
-from resources.room import RoomListResource, RoomResource, RoomIsFreehResource
+
+
+from resources.user import UserListResource, UserResource, MeResource
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
-# This is the app itself. This is not the most optimal way to implement create_app() but it will do
-# use app.app_context().push() in Python Shell for workaround
+from resources.room import RoomListResource, RoomResource, RoomPublishResource, RoomIsFreeResource
+from resources.room import ReservationListResource, ReservationResource, ReservationPublishResource
+
 
 def create_app():
     app = Flask(__name__)
@@ -21,7 +23,6 @@ def create_app():
 
 
 def register_extensions(app):
-    db.app = app
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt.init_app(app)
@@ -34,14 +35,26 @@ def register_extensions(app):
 
 def register_resources(app):
     api = Api(app)
+
     api.add_resource(UserListResource, '/users')
-    api.add_resource(RoomListResource, '/rooms')
-    api.add_resource(RoomResource, '/rooms/<int:instruction_id>')
-    api.add_resource(RoomIsFreehResource, '/rooms/<int:instruction_id>/isfree')
     api.add_resource(UserResource, '/users/<string:username>')
+
+    api.add_resource(MeResource, '/me')
+
     api.add_resource(TokenResource, '/token')
     api.add_resource(RefreshResource, '/refresh')
     api.add_resource(RevokeResource, '/revoke')
+
+    api.add_resource(RoomListResource, '/rooms')
+    api.add_resource(RoomResource, '/recipes/<int:room_id>')
+    api.add_resource(RoomPublishResource, '/recipes/<int:room_id>/publish')
+    api.add_resource(RoomIsFreeResource, '/recipes/<int:room_id>/free')
+
+    api.add_resource(ReservationListResource, '/reservations')
+    api.add_resource(ReservationResource, '/recipes/<int:reservation_id>')
+    api.add_resource(ReservationPublishResource, '/recipes/<int:reservation_id>/publish')
+
+
 
 
 if __name__ == '__main__':
