@@ -1,4 +1,5 @@
 from extensions import db
+from models.Room import Room, Reservation
 # This is the User model for SQLAlchemy containing the columns needed
 class User(db.Model):
     __tablename__ = 'user'
@@ -11,8 +12,9 @@ class User(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
-    rooms = db.relationship('Room', backref='user')
-    reservations = db.relationship('Reservation', backref='user')
+    rooms = db.relationship('Room', lazy='select', backref=db.backref('user', lazy='joined'))
+
+#    reservations = db.relationship('Reservation', backref='user')
 
     @classmethod
     def get_by_username(cls, username):

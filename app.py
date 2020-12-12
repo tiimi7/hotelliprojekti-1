@@ -46,13 +46,13 @@ def register_resources(app):
     api.add_resource(RevokeResource, '/revoke')
 
     api.add_resource(RoomListResource, '/rooms')
-    api.add_resource(RoomResource, '/recipes/<int:room_id>')
-    api.add_resource(RoomPublishResource, '/recipes/<int:room_id>/publish')
-    api.add_resource(RoomIsFreeResource, '/recipes/<int:room_id>/free')
+    api.add_resource(RoomResource, '/rooms/<int:room_id>')
+    api.add_resource(RoomPublishResource, '/rooms/<int:room_id>/publish')
+    api.add_resource(RoomIsFreeResource, '/rooms/<int:room_id>/free')
 
     api.add_resource(ReservationListResource, '/reservations')
-    api.add_resource(ReservationResource, '/recipes/<int:reservation_id>')
-    api.add_resource(ReservationPublishResource, '/recipes/<int:reservation_id>/publish')
+    api.add_resource(ReservationResource, '/reservations/<int:reservation_id>')
+    api.add_resource(ReservationPublishResource, '/reservations/<int:reservation_id>/publish')
 
 
 

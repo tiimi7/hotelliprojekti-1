@@ -8,7 +8,7 @@ class Room(db.Model):
     __tablename__ = 'Room'
     id=db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
     roomSize=db.Column(db.Integer, nullable=False)
-    reservation=db.relationship('Reservation',backref='Room',lazy='dynamic')
+#    reservation=db.relationship('Reservation',backref='Room',lazy='dynamic')
     is_free = db.Column(db.Boolean(), default=False)
     is_publish = db.Column(db.Boolean(), default=False)
 
