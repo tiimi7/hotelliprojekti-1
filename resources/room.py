@@ -105,21 +105,33 @@ class RoomResource(Resource):
 
 class RoomPublishResource(Resource):
 
+    @jwt_required
     def put(self, room_id):
         room = next((room for room in room_list if room.id == room_id), None)
 
         if room is None:
             return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
 
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
+
         room.is_publish = True
 
         return {}, HTTPStatus.NO_CONTENT
 
+    @jwt_required
     def delete(self, room_id):
         room = next((room for room in room_list if room.id == room_id), None)
 
         if room is None:
             return {'message': 'room not found'}, HTTPStatus.NOT_FOUND
+
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         room.is_publish = False
 
@@ -127,21 +139,33 @@ class RoomPublishResource(Resource):
 
 class RoomIsFreeResource(Resource):
 
+    @jwt_required
     def put(self, room_id):
         room = next((room for room in room_list if room.id == room_id), None)
 
         if room is None:
             return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
 
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
+
         room.is_free = True
 
         return {}, HTTPStatus.NO_CONTENT
 
+    @jwt_required
     def delete(self, room_id):
         room = next((room for room in room_list if room.id == room_id), None)
 
         if room is None:
             return {'message': 'room not found'}, HTTPStatus.NOT_FOUND
+
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         room.is_free = False
 
@@ -244,21 +268,33 @@ class ReservationResource(Resource):
 
 class ReservationPublishResource(Resource):
 
+    @jwt_required
     def put(self, reservation_id):
         reservation = next((reservation for reservation in reservation_list if reservation.id == reservation_id), None)
 
         if reservation is None:
             return {'message': 'Reservation not found'}, HTTPStatus.NOT_FOUND
 
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
+
         reservation.is_publish = True
 
         return {}, HTTPStatus.NO_CONTENT
 
+    @jwt_required
     def delete(self, reservation_id):
         reservation = next((reservation for reservation in reservation_list if reservation.id == reservation_id), None)
 
         if reservation is None:
             return {'message': 'Reservation not found'}, HTTPStatus.NOT_FOUND
+
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         reservation.is_publish = False
 
