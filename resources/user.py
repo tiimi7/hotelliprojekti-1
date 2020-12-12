@@ -80,4 +80,4 @@ class MeResource(Resource):
             'email': user.email,
         }
 
-        return user_schema.dump(user).data, HTTPStatus.OK
+        return data, HTTPStatus.OK

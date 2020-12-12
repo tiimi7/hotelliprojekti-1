@@ -11,7 +11,8 @@ class User(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now())
     updated_at = db.Column(db.DateTime(), nullable=False, server_default=db.func.now(), onupdate=db.func.now())
 
-    instructions = db.relationship('Instruction', backref='user') #tämä rivi täytyy muuttaa!
+    rooms = db.relationship('Room', backref='user')
+    reservations = db.relationship('Reservation', backref='user')
 
     @classmethod
     def get_by_username(cls, username):
