@@ -147,7 +147,7 @@ class RoomIsFreeResource(Resource):
         if current_user != room.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
-        room.is_isfree = True
+        room.is_free = True
         room.save()
 
         return {}, HTTPStatus.NO_CONTENT
@@ -166,6 +166,45 @@ class RoomIsFreeResource(Resource):
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         room.is_free = False
+        room.save()
+
+        return {}, HTTPStatus.NO_CONTENT
+
+
+class BreakfastResource(Resource):
+
+    @jwt_required
+    def put(self, room_id):
+
+        room = Room.get_by_id(room_id=room_id)
+
+        if room is None:
+            return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
+
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
+
+        room.breakfast = True
+        room.save()
+
+        return {}, HTTPStatus.NO_CONTENT
+
+    @jwt_required
+    def delete(self, room_id):
+
+        room = Room.get_by_id(room_id=room_id)
+
+        if room is None:
+            return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
+
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
+
+        room.breakfast = False
         room.save()
 
         return {}, HTTPStatus.NO_CONTENT
