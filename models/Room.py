@@ -29,8 +29,8 @@ class Room(db.Model):
         return cls.query.filter_by(is_publish=True).all()
 
     @classmethod
-    def get_by_id(cls, recipe_id):
-        return cls.query.filter_by(id=recipe_id).first()
+    def get_by_id(cls, room_id):
+        return cls.query.filter_by(id=room_id).first()
 
     def save(self):
         db.session.add(self)
@@ -72,8 +72,8 @@ class Reservation(db.Model):
         return cls.query.filter_by(is_publish=True).all()
 
     @classmethod
-    def get_by_id(cls, recipe_id):
-        return cls.query.filter_by(id=recipe_id).first()
+    def get_by_id(cls, room_id):
+        return cls.query.filter_by(id=room_id).first()
 
     def save(self):
         db.session.add(self)

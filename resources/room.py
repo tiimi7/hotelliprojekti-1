@@ -4,9 +4,6 @@ from flask_jwt_extended import get_jwt_identity, jwt_required, jwt_optional
 from http import HTTPStatus
 
 from models.Room import Room, Reservation
-room_list = []
-reservation_list = []
-
 
 # Tässä tiedostossa on aluksi models.py:n Room Classille resourcet,
 # niiden jälkeen models.py:n Reservationin resourcet.
@@ -33,9 +30,9 @@ class RoomListResource(Resource):
 
         room = Room(id=json_data['id'],
                         roomSize=json_data['roomSize'],
-                        reservation=json_data['reservation'],
-                        is_free=json_data['isfree'], # tuskin booleania voi tällä tavoin muuttaa, jos ei toimi, kokeile ['is_free = True']
-                        is_publish=json_data['ispublish'], # Sana kuin yllä
+#                        reservation=json_data['reservation'],
+#                        is_free=json_data['isfree'], # tuskin booleania voi tällä tavoin muuttaa, jos ei toimi, kokeile ['is_free = True']
+#                        is_publish=json_data['ispublish'], # Sana kuin yllä
                         user_id=current_user)
 
         room.save()
@@ -77,8 +74,8 @@ class RoomResource(Resource):
 
         Room.id = json_data['id']
         Room.roomSize = json_data['roomSize']
-        Room.reservation = json_data['reservation']
-        Room.is_free = json_data['isfree'] # Nämä eivät varmaankaan toimi ihan nöin
+#        Room.reservation = json_data['reservation']
+#        Room.is_free = json_data['isfree'] # Nämä eivät varmaankaan toimi ihan nöin
         Room.is_publish = json_data['isfree']
 
         Room.save()
