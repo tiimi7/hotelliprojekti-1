@@ -8,7 +8,6 @@ from models.Room import Room, Reservation
 # Tässä tiedostossa on aluksi models.py:n Room Classille resourcet,
 # niiden jälkeen models.py:n Reservationin resourcet.
 
-
 class RoomListResource(Resource):
 
     def get(self):
@@ -29,9 +28,6 @@ class RoomListResource(Resource):
         current_user = get_jwt_identity()
 
         room = Room(roomSize=json_data['roomSize'],
-#                        reservation=json_data['reservation'],
-#                        is_free=json_data['isfree'], # tuskin booleania voi tällä tavoin muuttaa, jos ei toimi, kokeile ['is_free = True']
-#                        is_publish=json_data['ispublish'], # Sana kuin yllä
                         user_id=current_user)
 
         room.save()
@@ -71,11 +67,11 @@ class RoomResource(Resource):
         if current_user != room.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
-        Room.id = json_data['id']
+#        Room.id = json_data['id']
         Room.roomSize = json_data['roomSize']
 #        Room.reservation = json_data['reservation']
 #        Room.is_free = json_data['isfree'] # Nämä eivät varmaankaan toimi ihan nöin
-        Room.is_publish = json_data['isfree']
+#        Room.is_publish = json_data['isfree']
 
         Room.save()
 
@@ -98,12 +94,12 @@ class RoomResource(Resource):
 
         return {}, HTTPStatus.NO_CONTENT
 
-
 class RoomPublishResource(Resource):
 
     @jwt_required
     def put(self, room_id):
-        room = next((room for room in room_list if room.id == room_id), None)
+
+        room = Room.get_by_id(room_id=room_id)
 
         if room is None:
             return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
@@ -114,30 +110,14 @@ class RoomPublishResource(Resource):
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         room.is_publish = True
+        room.save()
 
         return {}, HTTPStatus.NO_CONTENT
 
     @jwt_required
     def delete(self, room_id):
-        room = next((room for room in room_list if room.id == room_id), None)
 
-        if room is None:
-            return {'message': 'room not found'}, HTTPStatus.NOT_FOUND
-
-        current_user = get_jwt_identity()
-
-        if current_user != room.user_id:
-            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
-
-        room.is_publish = False
-
-        return {}, HTTPStatus.NO_CONTENT
-
-class RoomIsFreeResource(Resource):
-
-    @jwt_required
-    def put(self, room_id):
-        room = next((room for room in room_list if room.id == room_id), None)
+        room = Room.get_by_id(room_id=room_id)
 
         if room is None:
             return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
@@ -147,16 +127,38 @@ class RoomIsFreeResource(Resource):
         if current_user != room.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
-        room.is_free = True
+        room.is_publish = False
+        room.save()
+
+        return {}, HTTPStatus.NO_CONTENT
+
+class RoomIsFreeResource(Resource):
+
+    @jwt_required
+    def put(self, room_id):
+
+        room = Room.get_by_id(room_id=room_id)
+
+        if room is None:
+            return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
+
+        current_user = get_jwt_identity()
+
+        if current_user != room.user_id:
+            return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
+
+        room.is_isfree = True
+        room.save()
 
         return {}, HTTPStatus.NO_CONTENT
 
     @jwt_required
     def delete(self, room_id):
-        room = next((room for room in room_list if room.id == room_id), None)
+
+        room = Room.get_by_id(room_id=room_id)
 
         if room is None:
-            return {'message': 'room not found'}, HTTPStatus.NOT_FOUND
+            return {'message': 'Room not found'}, HTTPStatus.NOT_FOUND
 
         current_user = get_jwt_identity()
 
@@ -164,8 +166,13 @@ class RoomIsFreeResource(Resource):
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         room.is_free = False
+        room.save()
 
         return {}, HTTPStatus.NO_CONTENT
+
+
+
+
 
 
 # Reservationin resourcet alkavat tästä
@@ -191,9 +198,9 @@ class ReservationListResource(Resource):
 
         reservation = Reservation(
                         title=json_data['title'],
-#                        date=json_data['date'],
-                        startTime=json_data['startTime'],
-                        endTime=json_data['endTime'],
+                        date=json_data['date'],
+#                        startTime=json_data['startTime'],
+#                        endTime=json_data['endTime'],
                         duration=json_data['duration'],
 #                        is_publish=json_data['is_publish'],
                         user_id=current_user)
@@ -238,7 +245,8 @@ class ReservationResource(Resource):
         Reservation.id = json_data['id']
         Reservation.title = json_data['title']
         Reservation.date = json_data['date']
-        Reservation.startTime = json_data['startTime']
+#        Reservation.startTime = json_data['startTime']
+        Reservation.duration = json_data['duration']
         Reservation.is_publish = json_data['isPublish']
 
         reservation.save()
@@ -262,36 +270,41 @@ class ReservationResource(Resource):
 
         return {}, HTTPStatus.NO_CONTENT
 
+
 class ReservationPublishResource(Resource):
 
     @jwt_required
     def put(self, reservation_id):
-        reservation = next((reservation for reservation in reservation_list if reservation.id == reservation_id), None)
+
+        reservation = Reservation.get_by_id(reservation_id=reservation_id)
 
         if reservation is None:
             return {'message': 'Reservation not found'}, HTTPStatus.NOT_FOUND
 
         current_user = get_jwt_identity()
 
-        if current_user != room.user_id:
+        if current_user != reservation.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         reservation.is_publish = True
+        reservation.save()
 
         return {}, HTTPStatus.NO_CONTENT
 
     @jwt_required
     def delete(self, reservation_id):
-        reservation = next((reservation for reservation in reservation_list if reservation.id == reservation_id), None)
+
+        reservation = Room.get_by_id(reservation_id=reservation_id)
 
         if reservation is None:
             return {'message': 'Reservation not found'}, HTTPStatus.NOT_FOUND
 
         current_user = get_jwt_identity()
 
-        if current_user != room.user_id:
+        if current_user != reservation.user_id:
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         reservation.is_publish = False
+        reservation.save()
 
         return {}, HTTPStatus.NO_CONTENT
