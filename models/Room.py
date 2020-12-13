@@ -15,6 +15,7 @@ class Room(db.Model):
 #    reservation=db.relationship('Reservation',backref='Room',lazy='dynamic')
     is_free = db.Column(db.Boolean(), default=True)
     is_publish = db.Column(db.Boolean(), default=True)
+    breakfast = db.Column(db.Boolean(), default=False)
 
     user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
 
@@ -24,6 +25,7 @@ class Room(db.Model):
             'roomSize': self.roomSize,
             'isfree': self.is_free,
             'ispublish': self.is_publish,
+            'breakfast': self.breakfast,
             'user_id': self.user_id
         }
 
