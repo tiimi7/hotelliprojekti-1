@@ -28,8 +28,7 @@ class RoomListResource(Resource):
 
         current_user = get_jwt_identity()
 
-        room = Room(id=json_data['id'],
-                        roomSize=json_data['roomSize'],
+        room = Room(roomSize=json_data['roomSize'],
 #                        reservation=json_data['reservation'],
 #                        is_free=json_data['isfree'], # tuskin booleania voi tällä tavoin muuttaa, jos ei toimi, kokeile ['is_free = True']
 #                        is_publish=json_data['ispublish'], # Sana kuin yllä
@@ -190,13 +189,13 @@ class ReservationListResource(Resource):
 
         current_user = get_jwt_identity()
 
-        reservation = Reservation(id=json_data['id'],
+        reservation = Reservation(
                         title=json_data['title'],
-                        date=json_data['date'],
+#                        date=json_data['date'],
                         startTime=json_data['startTime'],
-                        endTime=json_data['endtime'],
-                        duration=json_data['endtime'],
-                        is_publish=json_data['ispublish'],
+                        endTime=json_data['endTime'],
+                        duration=json_data['duration'],
+#                        is_publish=json_data['is_publish'],
                         user_id=current_user)
 
 
