@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+            rel="stylesheet"
+            />
+        <link rel="stylesheet" href="http://127.0.0.1:5000/static/style.css">
+        
+        
+        
+        <title>Book your hotel night!</title>
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <img src="./oie_128400LpM5MoO2-removebg-preview.png" alt="logo">
+                <h2 class="logo">Reservation</h2>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a class="nav-link" href="index.html">Book</a></li>
+                    <li><a class="nav-link" href="#">About us</a></li>
+                    <li><a class="nav-link" href="#">Review</a></li>
+                    <li><a class="nav-right" href="specs.html">Sign In</a></li>
+                </ul>
+            </nav>
+            
+        </header>
+
+        <main>
+            <section class="presentation">
+                <div class="introduction">
+                    <div class="intro-text">
+                        <h1>Book now</h1>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        
+                        <form class="custom-select" name="sizes" action="" method="POST">
+                            <select  class="custom-select__trigger" required>
+                                <option  value=""   selected>Room size</option>
+                                <option class="custom-option" value="1">Small</option>
+                                <option class="custom-option" value="2">Medium</option>
+                                <option class="custom-option" value="3">Large</option>
+                            </select>
+                        </form>
+                        <form class="anotherone" action="" method="POST">
+                            <input class="custom-select_trigger" name="username" type="text" placeholder="Your name">
+                        </form>   
+
+                         
+                    <form class="calendarbar" action="" method="POST">
+                        <input name="startdate" type="text" autocomplete="off" id="litepicker" placeholder="Arrival on" class="form-control form-control-sm"/>
+                        <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
+                        <script>
+                            var picker = new Litepicker({ element: document.getElementById('litepicker') });
+                        </script>
+                        
+                    </form>
+                    <form class="calendarbar2" action="" method="POST">
+                        <input name="enddate" type="text" autocomplete="off" id="litepicker2" placeholder="Checking out" class="form-control form-control-sm"/>
+                        <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
+                        <script>
+                             var picker =  new Litepicker({ element: document.getElementById('litepicker2') });
+                        </script>
+                    </form>    
+                    
+                        
+                         
+                    </div>
+                    <form class="cta" method="POST">
+                        <button type="submit" class="cta-add">Reserve now!</button>
+                    </form>
+                </div>
+                
+                </div>
+                <div class="cover">
+                    <img src="/books-1419617-639x426-removebg-preview.png" alt="nvm">
+                </div>
+            </section>
+           
+            
+        </main>
+
+    </body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js:12:14452"></script>
+</html> 

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, render_template, redirect
 from flask_migrate import Migrate
 from flask_restful import Api
 
@@ -6,9 +6,9 @@ from config import Config
 from extensions import db, jwt
 
 
-from resources.user import UserListResource, UserResource, MeResource
+from resources.user import UserListResource, UserResource, MeResource, User
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
-from resources.room import RoomListResource, RoomResource, RoomPublishResource, RoomIsFreeResource
+from resources.room import RoomListResource, RoomResource, RoomPublishResource, RoomIsFreeResource, Reservation
 from resources.room import ReservationListResource, ReservationResource, ReservationPublishResource
 
 
@@ -18,6 +18,10 @@ def create_app():
 
     register_extensions(app)
     register_resources(app)
+
+    @app.route('/')
+    def reserv():
+        return render_template("index.html")
 
     return app
 
@@ -53,8 +57,6 @@ def register_resources(app):
     api.add_resource(ReservationListResource, '/reservations')
     api.add_resource(ReservationResource, '/reservations/<int:reservation_id>')
     api.add_resource(ReservationPublishResource, '/reservations/<int:reservation_id>/publish')
-
-
 
 
 if __name__ == '__main__':
