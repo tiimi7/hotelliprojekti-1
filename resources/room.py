@@ -288,6 +288,7 @@ class ReservationResource(Resource):
         Reservation.duration = json_data['duration']
         Reservation.is_publish = json_data['isPublish']
 
+
         reservation.save()
 
         return reservation.data(), HTTPStatus.OK
@@ -313,9 +314,10 @@ class ReservationResource(Resource):
 class ReservationPublishResource(Resource):
 
     @jwt_required
-    def put(self, reservation_id):
+    def put(self, reservation_id, room_id):
 
         reservation = Reservation.get_by_id(reservation_id=reservation_id)
+        room = Room.get_by_id(room_id=room_id)
 
         if reservation is None:
             return {'message': 'Reservation not found'}, HTTPStatus.NOT_FOUND
@@ -326,14 +328,17 @@ class ReservationPublishResource(Resource):
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         reservation.is_publish = True
+        room.is_free = False
         reservation.save()
+        room.save()
 
         return {}, HTTPStatus.NO_CONTENT
 
     @jwt_required
-    def delete(self, reservation_id):
+    def delete(self, reservation_id, room_id):
 
-        reservation = Room.get_by_id(reservation_id=reservation_id)
+        reservation = Reservation.get_by_id(reservation_id=reservation_id)
+        room = Room.get_by_id(room_id=room_id)
 
         if reservation is None:
             return {'message': 'Reservation not found'}, HTTPStatus.NOT_FOUND
@@ -344,6 +349,8 @@ class ReservationPublishResource(Resource):
             return {'message': 'Access is not allowed'}, HTTPStatus.FORBIDDEN
 
         reservation.is_publish = False
+        room.is_free = True
         reservation.save()
+        room.save()
 
         return {}, HTTPStatus.NO_CONTENT

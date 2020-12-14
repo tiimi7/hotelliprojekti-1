@@ -119,13 +119,19 @@ PUT päivittää varauksen tiedot JSONilla, kuten yllä.
 Hakee, päivittää tai jo luodun varauksen sen ID-numeron perusteella.
 
 
-reservationss/<int:reservation_id>/publish
+reservations/<int:reservation_id>/publish
 [PUT]
 [DELETE]
 
 Luodut varaukset eivät näy muille käyttäjille ennen tietojen julkaisua.
 PUT julkaisee, DELETE poistaa julkaisun.
 
+reservations/<int:reservation_id>/<int:room_id>/publish
+[PUT]
+[DELETE]
+
+PUT Liittää varauksen huoneeseen käyttäen huoneen id-numeroa.
+DELETE vastaavasti poistaa tämän varauksen.
 
 
 

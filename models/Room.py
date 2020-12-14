@@ -12,11 +12,9 @@ class Room(db.Model):
     __tablename__ = 'Room'
     id=db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
     roomSize=db.Column(db.Integer, nullable=True)
-#    reservation=db.relationship('Reservation',backref='Room',lazy='dynamic')
     is_free = db.Column(db.Boolean(), default=True)
     is_publish = db.Column(db.Boolean(), default=False)
     breakfast = db.Column(db.Boolean(), default=False)
-
     user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
 
     def data(self):
@@ -58,7 +56,6 @@ class Reservation(db.Model):
 #    endTime=db.Column(db.Integer,nullable=True)
     duration=db.Column(db.Integer,nullable=True)
     is_publish = db.Column(db.Boolean(), default=False)
-
     user_id = db.Column(db.Integer(), db.ForeignKey("user.id"))
 
     def data(self):

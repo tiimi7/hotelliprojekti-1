@@ -58,7 +58,7 @@ def register_resources(app):
 
     api.add_resource(ReservationListResource, '/reservations')
     api.add_resource(ReservationResource, '/reservations/<int:reservation_id>')
-    api.add_resource(ReservationPublishResource, '/reservations/<int:reservation_id>/publish')
+    api.add_resource(ReservationPublishResource, '/reservations/<int:reservation_id>/<int:room_id>/publish')
 
 
 if __name__ == '__main__':
