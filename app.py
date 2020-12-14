@@ -10,7 +10,7 @@ from resources.user import UserListResource, UserResource, MeResource, User
 from resources.token import TokenResource, RefreshResource, RevokeResource, black_list
 from resources.room import RoomListResource, RoomResource, RoomPublishResource, RoomIsFreeResource,\
     BreakfastResource, Reservation
-from resources.room import ReservationListResource, ReservationResource, ReservationPublishResource
+from resources.room import ReservationListResource, ReservationResource, ReservationPublishResource, ReservationMakeResource
 
 
 def create_app():
@@ -58,7 +58,8 @@ def register_resources(app):
 
     api.add_resource(ReservationListResource, '/reservations')
     api.add_resource(ReservationResource, '/reservations/<int:reservation_id>')
-    api.add_resource(ReservationPublishResource, '/reservations/<int:reservation_id>/<int:room_id>/publish')
+    api.add_resource(ReservationPublishResource, '/reservations/<int:reservation_id>/publish')
+    api.add_resource(ReservationMakeResource, '/reservations/<int:reservation_id>/<int:room_id>/make')
 
 
 if __name__ == '__main__':

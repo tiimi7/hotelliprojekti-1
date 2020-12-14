@@ -126,7 +126,7 @@ reservations/<int:reservation_id>/publish
 Luodut varaukset eivät näy muille käyttäjille ennen tietojen julkaisua.
 PUT julkaisee, DELETE poistaa julkaisun.
 
-reservations/<int:reservation_id>/<int:room_id>/publish
+reservations/<int:reservation_id>/<int:room_id>/make
 [PUT]
 [DELETE]
 
